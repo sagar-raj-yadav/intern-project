@@ -9,7 +9,6 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
 mongoose.connect('mongodb+srv://sagarrajyadav2002:internship@cluster0.6r0d2yb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -21,7 +20,6 @@ db.once('open', () => {
     console.log('Connected to MongoDB');
 });
 
-// Define Mongoose Schemas
 const transactionSchema = new mongoose.Schema({
     title: String,
     description: String,
@@ -37,13 +35,11 @@ app.get('/', (req, res) => {
     res.send('Hello, world!');
 });
 
-// API to initialize the database
 app.get('/api/init', async (req, res) => {
     try {
         const response = await axios.get('https://s3.amazonaws.com/roxiler.com/product_transaction.json');
         const transactions = response.data;
 
-        // Insert the fetched data into MongoDB
         await Transaction.deleteMany({});
         await Transaction.insertMany(transactions);
 
@@ -84,7 +80,6 @@ app.get('/api/transactions', async (req, res) => {
     }
 });
 
-// API for statistics
 app.get('/api/statistics', async (req, res) => {
     try {
         const { month } = req.query;
@@ -117,7 +112,6 @@ app.get('/api/statistics', async (req, res) => {
     }
 });
 
-// API for bar chart data
 app.get('/api/bar-chart', async (req, res) => {
     try {
         const { month } = req.query;
@@ -151,7 +145,6 @@ app.get('/api/bar-chart', async (req, res) => {
     }
 });
 
-// API for pie chart data
 app.get('/api/pie-chart', async (req, res) => {
     try {
         const { month } = req.query;
@@ -177,7 +170,6 @@ app.get('/api/pie-chart', async (req, res) => {
     }
 });
 
-// API to fetch combined data
 app.get('/api/combined-data', async (req, res) => {
     try {
         const { month } = req.query;

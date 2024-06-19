@@ -9,9 +9,8 @@ export const fetchTransactions = async (month, search, page, perPage) => {
         perPage
     };
     
-    // Ensure month is formatted correctly if provided
     if (month) {
-        params.month = new Date(month).toISOString().slice(0, 10); // Format to YYYY-MM-DD
+        params.month = new Date(month).toISOString().slice(0, 10);
     }
 
     const response = await axios.get(`${API_BASE_URL}/transactions`, { params });
